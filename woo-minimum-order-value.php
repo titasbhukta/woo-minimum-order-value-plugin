@@ -8,7 +8,7 @@
  * @wordpress-plugin
  * Plugin Name:       Woo Minimum Order Value
  * Plugin URI:        https://https://titasbhukta.in/
- * Description:       This is a plugin to add a minimum order amount for woocommerce. There is a settings page for the plugin where you can enter you desired minimum order amount. If the cart amount is lesser than that, it will show a notice on the cart saying the minimum amount and disable the user to checkout.
+ * Description:       This is a plugin to add a minimum order amount for woocommerce. There is a settings page for the plugin where you can enter you desired minimum order amount. If the cart amount is lesser than that, it will show a customized notice which can be set in the plugin settings on the cart page and disable the user to checkout.
  * Version:           1.0.0
  * Author:            Titas Bhukta
  * Author URI:        https://titasbhukta.in
@@ -47,6 +47,13 @@ function woo_minimum_order_value_settings_init(  ) {
         'woo_minimum_order_value_settings',
         'woo_minimum_order_value_validation_settings_section'
     );
+    add_settings_field(
+        'woo_minimum_order_value_notice_text_field',
+        __( 'Notice Text if Minumum Order Amount Not Reached', 'wordpress' ),
+        'woo_minimum_order_value_notice_text_field_render',
+        'woo_minimum_order_value_settings',
+        'woo_minimum_order_value_validation_settings_section'
+    );
 
 }
 add_action( 'admin_init', 'woo_minimum_order_value_settings_init' );
@@ -58,9 +65,15 @@ function woo_minimum_order_value_amount_text_field_render() {
     <?php
 }
 
+function woo_minimum_order_value_notice_text_field_render() {
+    $options = get_option( 'woo_minimum_order_value_validation_settings' );
+    ?>
+    <input type='text' name='woo_minimum_order_value_validation_settings[woo_minimum_order_value_notice_text_field]' value='<?php echo $options['woo_minimum_order_value_notice_text_field']; ?>'>
+    <?php
+}
 
 function woo_minimum_order_value_validation_settings_section_callback() {
-    echo __( 'Enter the minimum order amount for woocommerce', 'wordpress' );
+    echo __( 'Enter the details to setup minimum order amount for woocommerce', 'wordpress' );
 }
 
 function woo_minimum_order_value_settings_page() {
@@ -80,13 +93,14 @@ function woo_minimum_order_value_settings_page() {
 }
 
 
-add_action( 'woocommerce_check_cart_items', 'required_min_cart_subtotal_amount' );
-function required_min_cart_subtotal_amount() {
+add_action( 'woocommerce_check_cart_items', 'checkpoint_woo_minimum_order_amount' );
+function checkpoint_woo_minimum_order_amount() {
     $options = get_option( 'woo_minimum_order_value_validation_settings' );
     $woo_minimum_order_value_amount = $options['woo_minimum_order_value_amount_text_field'];
+    $woo_minimum_order_value_notice = $options['woo_minimum_order_value_notice_text_field'];
     $cart_subtotal = WC()->cart->subtotal;
     if( $cart_subtotal < $woo_minimum_order_value_amount  ) {
-        wc_add_notice( '<strong>' . sprintf( __("A minimum total purchase amount of %s is required to checkout."), wc_price($woo_minimum_order_value_amount) ) . '</strong>', 'error' );
+        wc_add_notice( '<strong>' . sprintf( $woo_minimum_order_value_notice ) . '</strong>', 'error' );
     }
 }
 ?>
