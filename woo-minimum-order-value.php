@@ -104,20 +104,4 @@ function checkpoint_woo_minimum_order_amount() {
     }
 }
 
-
-add_filter('gettext_woocommerce', 'modify_error_message_on_checkout', 10, 3);
-
-function modify_error_message_on_checkout($custom_message, $text, $domain) {
-	$options = get_option( 'woo_minimum_order_value_validation_settings' );
-    $woo_minimum_order_value_amount = $options['woo_minimum_order_value_amount_text_field'];
-    $woo_minimum_order_value_notice = $options['woo_minimum_order_value_notice_text_field'];
-    $cart_subtotal = WC()->cart->subtotal;
-    if( $cart_subtotal < $woo_minimum_order_value_amount  ) {
-        if ('There are some issues with the items in your cart. Please go back to the cart page and resolve these issues before checking out.' === $custom_message) {
-			$custom_message =  $woo_minimum_order_value_notice;
-		}
-    }
-    return $custom_message;
-}
-
 ?>
