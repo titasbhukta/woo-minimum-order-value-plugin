@@ -93,7 +93,7 @@ function woo_minimum_order_value_settings_page() {
 }
 
 
-add_action( 'woocommerce_check_cart_items', 'checkpoint_woo_minimum_order_amount' );
+/*add_action( 'woocommerce_check_cart_items', 'checkpoint_woo_minimum_order_amount' );
 function checkpoint_woo_minimum_order_amount() {
     $options = get_option( 'woo_minimum_order_value_validation_settings' );
     $woo_minimum_order_value_amount = $options['woo_minimum_order_value_amount_text_field'];
@@ -102,6 +102,6 @@ function checkpoint_woo_minimum_order_amount() {
     if( $cart_subtotal < $woo_minimum_order_value_amount  ) {
         wc_add_notice( '<strong>' . sprintf( $woo_minimum_order_value_notice ) . '</strong>', 'error' );
     }
-}
+}*/
 
 ?>
