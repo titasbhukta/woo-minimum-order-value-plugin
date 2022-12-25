@@ -1,17 +1,17 @@
 <?php
 
 /**
- * @link              https://titasbhukta.in
+ * @link              https://titasbhukta.com
  * @since             1.0.0
  * @package           Woo_Minimum_Order_Value
  *
  * @wordpress-plugin
  * Plugin Name:       Woo Minimum Order Value
- * Plugin URI:        https://https://titasbhukta.in/
+ * Plugin URI:        https://titasbhukta.com/plugin/woo-minumum-order-value/
  * Description:       This is a plugin to add a minimum order amount for woocommerce. There is a settings page for the plugin where you can enter you desired minimum order amount. If the cart amount is lesser than that, it will show a customized notice which can be set in the plugin settings on the cart page and disable the user to checkout.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            Titas Bhukta
- * Author URI:        https://titasbhukta.in
+ * Author URI:        https://titasbhukta.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       woo-minimum-order-value
@@ -103,5 +103,6 @@ function checkpoint_woo_minimum_order_amount() {
         wc_add_notice( '<strong>' . sprintf( $woo_minimum_order_value_notice ) . '</strong>', 'error' );
     }
 }
+
 
 ?>
